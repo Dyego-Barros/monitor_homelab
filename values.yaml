@@ -87,19 +87,18 @@ proemtheus:
 grafana:  
   enabled: true
   replicaCount: 1
-  
+
   image:
     repository: grafana/grafana
     tag: 10.0.0       # Coloque a versão que deseja
     pullPolicy: IfNotPresent
 
-  storageClass:
-    create: false
-    name: nfs-client
 
   persistence:
     enabled: true
-    storageClassName: nfs-client
+    storageClass:
+      create: false   # <-- aqui
+      name: nfs-client
     accessModes:
       - ReadWriteMany
     size: 10Gi
