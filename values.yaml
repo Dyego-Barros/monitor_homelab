@@ -28,7 +28,7 @@ default:
 
   persistence:
     enabled: true
-    storageClassName: nfs-client
+    #storageClassName: nfs-client
     accessModes:
       - ReadWriteMany
     size: 10Gi
