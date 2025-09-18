@@ -1,0 +1,75 @@
+default:
+  replicaCount: 1
+
+  image:
+    repository: prom/prometheus
+    pullPolicy: IfNotPresent
+    tag: "v2.52.0"
+
+  service:
+    type: ClusterIP
+    port: 9090
+
+  ingress:
+    enabled: true
+    className: "nginx"
+    annotations:
+      kubernetes.io/ingress.class: nginx
+    hosts:
+      - host: prometheus.meuteste.com
+        paths:
+          - path: /
+            pathType: Prefix
+    tls: []
+
+  volumeMounts:
+    - name: prometheus-storage
+      mountPath: /prometheus
+
+  volumes:
+    - name: prometheus-storage
+      persistentVolumeClaim:
+        claimName: prometheus-default-pvc
+
+  storageClass:
+    create: false
+    name: nas-storage
+
+  
+  persistentVolume:
+    create: true
+    storageClassName: nas-storage  # nome do StorageClass
+    accessModes:
+      - ReadWriteMany
+    size: 10Gi 
+
+  kubeStateMetrics:
+    enabled: true
+    fullnameOverride: prometheus-kube-state-metrics
+    
+
+  nodeExporter:
+    enabled: true
+    fullnameOverride: prometheus-node-exporter
+
+  resources:
+    limits:
+      cpu: 200m
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 3
+    targetCPUUtilizationPercentage: 80
+    
+  additionalScrapeConfigs:
+    enabled: true
+    name: prometheus-additional-scrape-configs
+    key: additional-scrape-configs.yaml
+
+  securityContext:
+    runAsUser: 0
