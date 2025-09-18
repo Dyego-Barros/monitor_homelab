@@ -89,11 +89,7 @@ grafana:
       kubernetes.io/ingress.class: nginx
     hosts:
       - host: grafana.dyego.lab
-        paths:
-          - path: /
-            pathType: Prefix
-    tls: []
-
+      
 # Configurações removidas/corrigidas:
 # - Removida a seção 'storageClass' de nível superior do Prometheus
 # - Corrigida a estrutura de persistence do Grafana (storageClassName em vez de storageClass.create/name)
