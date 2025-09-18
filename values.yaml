@@ -26,6 +26,9 @@ default:
             pathType: Prefix
     tls: []
 
+  persistentVolume:
+    create: false  # Defina como false já que você está usando storageClassName
+    
   persistence:
     enabled: true
     #storageClassName: nfs-client
