@@ -22,14 +22,14 @@ default:
             pathType: Prefix
     tls: []
 
-  volumeMounts:
-    - name: prometheus-storage
-      mountPath: /prometheus
+  # volumeMounts:
+  #   - name: prometheus-storage
+  #     mountPath: /prometheus
 
-  volumes:
-    - name: prometheus-storage
-      persistentVolumeClaim:
-        claimName: prometheus-default-pvc
+  # volumes:
+  #   - name: prometheus-storage
+  #     persistentVolumeClaim:
+  #       claimName: prometheus-default-pvc
 
   storageClass:
     create: false
@@ -82,3 +82,30 @@ default:
 
   securityContext:
     runAsUser: 0
+
+grafana:
+  enabled: true
+  persistence:
+    enabled: true
+    storageClassName: nfs-client
+    accessModes:
+      - ReadWriteMany
+    size: 10Gi
+
+  adminUser: admin
+  adminPassword: "@Dyego050291#"
+  service:
+    type: ClusterIP
+    port: 3000
+
+  ingress:
+    enabled: true
+    className: "nginx"
+    annotations:
+      kubernetes.io/ingress.class: nginx
+    hosts:
+      - host: grafana.dyego.lab
+        paths:
+          - path: /
+            pathType: Prefix
+    tls: []
