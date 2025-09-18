@@ -1,12 +1,15 @@
-prometheus:
-  enabled: true
+default:
+ 
   replicaCount: 1
 
   image:
     repository: prom/prometheus
     pullPolicy: IfNotPresent
     tag: "v2.52.0"
-
+  
+  storageClass:
+    create: false
+    name: nfs-client
   service:
     type: ClusterIP
     port: 9090
