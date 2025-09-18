@@ -38,7 +38,7 @@ default:
   
   persistentVolume:
     create: true
-    storageClassName: nas-storage  # nome do StorageClass
+    storageClassName: nfs-client  # nome do StorageClass
     accessModes:
       - ReadWriteMany
     size: 10Gi 
