@@ -85,6 +85,11 @@ proemtheus:
 
 grafana:
   enabled: true
+
+  storageClass:
+    create: false
+    name: nfs-client
+    
   persistence:
     enabled: true
     storageClassName: nfs-client
