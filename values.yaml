@@ -60,34 +60,34 @@ prometheus:
   securityContext:
     runAsUser: 0
 
-grafana:
-  enabled: true
-  replicaCount: 1
+# grafana:
+#   enabled: true
+#   replicaCount: 1
 
-  image:
-    repository: grafana/grafana
-    tag: "10.0.0"
-    pullPolicy: IfNotPresent
+#   image:
+#     repository: grafana/grafana
+#     tag: "10.0.0"
+#     pullPolicy: IfNotPresent
 
-  persistence:
-    enabled: true
-    storageClassName: nfs-client
-    accessModes:
-      - ReadWriteMany
-    size: 10Gi
+#   persistence:
+#     enabled: true
+#     storageClassName: nfs-client
+#     accessModes:
+#       - ReadWriteMany
+#     size: 10Gi
 
-  adminUser: admin
-  adminPassword: "@Dyego050291#"
-  service:
-    type: ClusterIP
-    port: 3000
+#   adminUser: admin
+#   adminPassword: "@Dyego050291#"
+#   service:
+#     type: ClusterIP
+#     port: 3000
 
-  ingress:
-    enabled: true
-    className: "nginx"
-    annotations:
-      kubernetes.io/ingress.class: nginx
-    hostname: grafana.dyego.lab
+#   ingress:
+#     enabled: true
+#     className: "nginx"
+#     annotations:
+#       kubernetes.io/ingress.class: nginx
+#     hostname: grafana.dyego.lab
       
 # Configurações removidas/corrigidas:
 # - Removida a seção 'storageClass' de nível superior do Prometheus
