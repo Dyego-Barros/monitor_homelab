@@ -16,7 +16,7 @@ default:
     annotations:
       kubernetes.io/ingress.class: nginx
     hosts:
-      - host: prometheus.meuteste.com
+      - host: prometheus.dyego.lab
         paths:
           - path: /
             pathType: Prefix
@@ -45,12 +45,12 @@ default:
     #existingClaim: "" 
     
 
-  persistentVolume:
-    create: true
-    storageClassName: nfs-client
-    accessModes:
-      - ReadWriteMany
-    size: 10Gi
+  # persistentVolume:
+  #   create: true
+  #   storageClassName: nfs-client
+  #   accessModes:
+  #     - ReadWriteMany
+  #   size: 10Gi
   
   kubeStateMetrics:
     enabled: true
