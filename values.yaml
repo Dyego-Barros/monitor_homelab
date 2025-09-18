@@ -1,4 +1,11 @@
 default:
+  persistence:
+    storageClassName: "nfs-client"
+  persistentVolume:
+    enabled: false
+
+    
+prometheus:
  
   replicaCount: 1
 
@@ -28,7 +35,7 @@ default:
 
   persistentVolume:
     create: false  # Defina como false já que você está usando storageClassName
-    
+
   persistence:
     enabled: true
     #storageClassName: nfs-client
