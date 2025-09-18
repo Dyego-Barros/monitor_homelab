@@ -1,6 +1,9 @@
 
+default:
+  enabled: false
+
 prometheus:
- 
+  enabled: true
   replicaCount: 1
 
   image:
