@@ -1,6 +1,18 @@
-
+# Configuração completa para o chart default para evitar erros de nil pointer
 default:
   enabled: false
+  storageClass:
+    create: false  # Fornece valor padrão para evitar nil pointer
+    name: ""
+  persistentVolume:
+    create: false  # Fornece valor padrão
+    enabled: false
+  persistence:
+    enabled: false
+    storageClassName: ""
+    accessModes:
+      - ReadWriteOnce
+    size: 8Gi
 
 prometheus:
   enabled: true
@@ -10,10 +22,7 @@ prometheus:
     repository: prom/prometheus
     pullPolicy: IfNotPresent
     tag: "v2.52.0"
-  
-  storageClass:
-    create: false
-    name: nfs-client
+
   service:
     type: ClusterIP
     port: 9090
@@ -30,12 +39,9 @@ prometheus:
             pathType: Prefix
     tls: []
 
-  persistentVolume:
-    create: false  # Defina como false já que você está usando storageClassName
-
   persistence:
     enabled: true
-    #storageClassName: nfs-client
+    storageClassName: "nfs-client"  # DESCOMENTADO e com aspas
     accessModes:
       - ReadWriteMany
     size: 10Gi
@@ -81,18 +87,11 @@ grafana:
 
   persistence:
     enabled: true
-    storageClassName: nfs-client
+    storageClassName: "nfs-client"  # Com aspas
     accessModes:
       - ReadWriteMany
     size: 10Gi
 
-  storageClass:
-    create: false
-    name: nfs-client 
-  
-  persistentVolume:
-    create: false  
-    
   adminUser: admin
   adminPassword: "@Dyego050291#"
   service:
@@ -104,10 +103,14 @@ grafana:
     className: "nginx"
     annotations:
       kubernetes.io/ingress.class: nginx
-    hostname: grafana.dyego.lab
-      
-# Configurações removidas/corrigidas:
-# - Removida a seção 'storageClass' de nível superior do Prometheus
-# - Corrigida a estrutura de persistence do Grafana (storageClassName em vez de storageClass.create/name)
-# - Corrigida a estrutura dos hosts do ingress do Grafana
-# - Tag do Grafana entre aspas para garantir tratamento como string
+    # Formato correto para o chart Grafana
+    hosts:
+      - grafana.dyego.lab  # Lista de strings simples
+    # Ou alternativamente, se não funcionar:
+    # host: grafana.dyego.lab
+    # path: /
+
+# Configuração global para evitar problemas adicionais
+global:
+  storageClass:
+    create: false
