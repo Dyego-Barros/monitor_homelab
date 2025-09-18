@@ -34,10 +34,8 @@ prometheus:
     annotations:
       kubernetes.io/ingress.class: nginx
     hosts:
-      - host: prometheus.dyego.lab
-        paths:
-          - path: /
-            pathType: Prefix
+      - prometheus.dyego.lab
+        
     tls: []
 
   persistence:
@@ -95,6 +93,7 @@ grafana:
 
   adminUser: admin
   adminPassword: "@Dyego050291#"
+
   service:
     type: ClusterIP
     port: 3000
