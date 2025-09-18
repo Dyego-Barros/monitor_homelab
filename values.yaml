@@ -1,118 +1,121 @@
 proemtheus:
   enabled: true
-  default:
-    replicaCount: 1
+  replicaCount: 1
 
-    image:
-      repository: prom/prometheus
-      pullPolicy: IfNotPresent
-      tag: "v2.52.0"
+  image:
+    repository: prom/prometheus
+    pullPolicy: IfNotPresent
+    tag: "v2.52.0"
 
-    service:
-      type: ClusterIP
-      port: 9090
+  service:
+    type: ClusterIP
+    port: 9090
 
-    ingress:
-      enabled: true
-      className: "nginx"
-      annotations:
-        kubernetes.io/ingress.class: nginx
-      hosts:
-        - host: prometheus.dyego.lab
-          paths:
-            - path: /
-              pathType: Prefix
-      tls: []
-
-    # volumeMounts:
-    #   - name: prometheus-storage
-    #     mountPath: /prometheus
-
-    # volumes:
-    #   - name: prometheus-storage
-    #     persistentVolumeClaim:
-    #       claimName: prometheus-default-pvc
-
-    storageClass:
-      create: false
-      name: nfs-client
-
-    persistence:
-      enabled: true
-      storageClassName: nfs-client  
-      accessModes:
-        - ReadWriteMany
-      size: 10Gi
-      #annotations: {}
-      #existingClaim: "" 
-      
-
-    # persistentVolume:
-    #   create: true
-    #   storageClassName: nfs-client
-    #   accessModes:
-    #     - ReadWriteMany
-    #   size: 10Gi
-    
-    kubeStateMetrics:
-      enabled: true
-      fullnameOverride: prometheus-kube-state-metrics
-      
-
-    nodeExporter:
-      enabled: true
-      fullnameOverride: prometheus-node-exporter
-
-    resources:
-      limits:
-        cpu: 200m
-        memory: 256Mi
-      requests:
-        cpu: 100m
-        memory: 128Mi
-
-    autoscaling:
-      enabled: false
-      minReplicas: 1
-      maxReplicas: 3
-      targetCPUUtilizationPercentage: 80
-      
-    additionalScrapeConfigs:
-      enabled: true
-      name: prometheus-additional-scrape-configs
-      key: additional-scrape-configs.yaml
-
-    securityContext:
-      runAsUser: 0
-
-grafana:
-  enabled: true
-  default:
+  ingress:
     enabled: true
+    className: "nginx"
+    annotations:
+      kubernetes.io/ingress.class: nginx
+    hosts:
+      - host: prometheus.dyego.lab
+        paths:
+          - path: /
+            pathType: Prefix
+    tls: []
 
-    storageClass:
-      create: false
-      name: nfs-client
+  # volumeMounts:
+  #   - name: prometheus-storage
+  #     mountPath: /prometheus
 
-    persistence:
-      enabled: true
-      storageClassName: nfs-client
-      accessModes:
-        - ReadWriteMany
-      size: 10Gi
+  # volumes:
+  #   - name: prometheus-storage
+  #     persistentVolumeClaim:
+  #       claimName: prometheus-default-pvc
 
-    adminUser: admin
-    adminPassword: "@Dyego050291#"
-    service:
-      type: ClusterIP
-      port: 3000
+  storageClass:
+    create: false
+    name: nfs-client
 
-    ingress:
-      enabled: true
-      className: "nginx"
-      annotations:
-        kubernetes.io/ingress.class: nginx
-      hosts:
-        - grafana.dyego.lab  # LISTA DE STRINGS, não mapas
+  persistence:
+    enabled: true
+    storageClassName: nfs-client  
+    accessModes:
+      - ReadWriteMany
+    size: 10Gi
+    #annotations: {}
+    #existingClaim: "" 
+    
+
+  # persistentVolume:
+  #   create: true
+  #   storageClassName: nfs-client
+  #   accessModes:
+  #     - ReadWriteMany
+  #   size: 10Gi
+  
+  kubeStateMetrics:
+    enabled: true
+    fullnameOverride: prometheus-kube-state-metrics
+    
+
+  nodeExporter:
+    enabled: true
+    fullnameOverride: prometheus-node-exporter
+
+  resources:
+    limits:
+      cpu: 200m
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 3
+    targetCPUUtilizationPercentage: 80
+    
+  additionalScrapeConfigs:
+    enabled: true
+    name: prometheus-additional-scrape-configs
+    key: additional-scrape-configs.yaml
+
+  securityContext:
+    runAsUser: 0
+
+grafana:  
+  enabled: true
+  replicaCount: 1
+  
+  image:
+    repository: grafana/grafana
+    tag: 10.0.0       # Coloque a versão que deseja
+    pullPolicy: IfNotPresent
+
+  storageClass:
+    create: false
+    name: nfs-client
+
+  persistence:
+    enabled: true
+    storageClassName: nfs-client
+    accessModes:
+      - ReadWriteMany
+    size: 10Gi
+
+  adminUser: admin
+  adminPassword: "@Dyego050291#"
+  service:
+    type: ClusterIP
+    port: 3000
+
+  ingress:
+    enabled: true
+    className: "nginx"
+    annotations:
+      kubernetes.io/ingress.class: nginx
+    hosts:
+      - grafana.dyego.lab  # LISTA DE STRINGS, não mapas
 
   
