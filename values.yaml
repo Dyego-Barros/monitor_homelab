@@ -1,4 +1,4 @@
-proemtheus:
+prometheus:
   enabled: true
   replicaCount: 1
 
@@ -23,40 +23,16 @@ proemtheus:
             pathType: Prefix
     tls: []
 
-  # volumeMounts:
-  #   - name: prometheus-storage
-  #     mountPath: /prometheus
-
-  # volumes:
-  #   - name: prometheus-storage
-  #     persistentVolumeClaim:
-  #       claimName: prometheus-default-pvc
-
-  storageClass:
-    create: false
-    name: nfs-client
-
   persistence:
     enabled: true
-    storageClassName: nfs-client  
+    storageClassName: nfs-client
     accessModes:
       - ReadWriteMany
     size: 10Gi
-    #annotations: {}
-    #existingClaim: "" 
-    
 
-  # persistentVolume:
-  #   create: true
-  #   storageClassName: nfs-client
-  #   accessModes:
-  #     - ReadWriteMany
-  #   size: 10Gi
-  
   kubeStateMetrics:
     enabled: true
     fullnameOverride: prometheus-kube-state-metrics
-    
 
   nodeExporter:
     enabled: true
@@ -75,7 +51,7 @@ proemtheus:
     minReplicas: 1
     maxReplicas: 3
     targetCPUUtilizationPercentage: 80
-    
+
   additionalScrapeConfigs:
     enabled: true
     name: prometheus-additional-scrape-configs
@@ -84,21 +60,18 @@ proemtheus:
   securityContext:
     runAsUser: 0
 
-grafana:  
+grafana:
   enabled: true
   replicaCount: 1
 
   image:
     repository: grafana/grafana
-    tag: 10.0.0       # Coloque a versão que deseja
+    tag: "10.0.0"
     pullPolicy: IfNotPresent
-
 
   persistence:
     enabled: true
-    storageClass:
-      create: false   # <-- aqui
-      name: nfs-client
+    storageClassName: nfs-client
     accessModes:
       - ReadWriteMany
     size: 10Gi
@@ -115,6 +88,14 @@ grafana:
     annotations:
       kubernetes.io/ingress.class: nginx
     hosts:
-      - grafana.dyego.lab  # LISTA DE STRINGS, não mapas
+      - host: grafana.dyego.lab
+        paths:
+          - path: /
+            pathType: Prefix
+    tls: []
 
-  
+# Configurações removidas/corrigidas:
+# - Removida a seção 'storageClass' de nível superior do Prometheus
+# - Corrigida a estrutura de persistence do Grafana (storageClassName em vez de storageClass.create/name)
+# - Corrigida a estrutura dos hosts do ingress do Grafana
+# - Tag do Grafana entre aspas para garantir tratamento como string
