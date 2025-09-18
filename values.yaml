@@ -87,8 +87,7 @@ grafana:
     className: "nginx"
     annotations:
       kubernetes.io/ingress.class: nginx
-    hosts:
-      - host: grafana.dyego.lab
+    hostname: grafana.dyego.lab
       
 # Configurações removidas/corrigidas:
 # - Removida a seção 'storageClass' de nível superior do Prometheus
