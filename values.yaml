@@ -1,4 +1,4 @@
-default:
+proemtheus:
   replicaCount: 1
 
   image:
@@ -104,6 +104,6 @@ grafana:
     annotations:
       kubernetes.io/ingress.class: nginx
     hosts:
-      - host: grafana.dyego.lab
-       
-    tls: []
+      - grafana.dyego.lab  # LISTA DE STRINGS, não mapas
+
+  
