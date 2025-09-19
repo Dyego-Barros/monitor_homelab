@@ -33,9 +33,7 @@ prometheus:
  
 # --- GRAFANA ---
 grafana:
-  enabled: true
-  replicaCount: 1
-
+  enabled: true 
   persistence:
     enabled: true
     storageClassName: "nfs-client"  # Com aspas
