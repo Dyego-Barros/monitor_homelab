@@ -1,18 +1,14 @@
 # --- PROMETHEUS ---
 prometheus:
   enabled: true
-  image:
-    repository: quay.io/prometheus-operator/prometheus-config-reloader
-    tag: v0.85.0  # Versão específica do Prometheus
-    pullPolicy: IfNotPresent
-
+  
   persistence:
     enabled: true
     storageClassName: "nfs-client"  # Com aspas
     accessModes:
       - ReadWriteMany
     size: 10Gi
-    
+
   service:
     enabled: true
     type: ClusterIP
