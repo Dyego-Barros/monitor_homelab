@@ -1,27 +1,17 @@
-# Configuração completa para o chart default para evitar erros de nil pointer
-default:
-  enabled: false
-  storageClass:
-    create: false  # Fornece valor padrão para evitar nil pointer
-    name: ""
-  persistentVolume:
-    create: false  # Fornece valor padrão
-    enabled: false
-  persistence:
-    enabled: false
-    storageClassName: ""
-    accessModes:
-      - ReadWriteOnce
-    size: 8Gi
-
+# --- PROMETHEUS ---
 prometheus:
   enabled: true
-  replicaCount: 1
-
-  image:
-    repository: prom/prometheus
-    pullPolicy: IfNotPresent
-    tag: "v2.52.0"
+  prometheusSpec:
+    replicas: 1
+    retention: 15d
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: "nfs-client"
+          accessModes: ["ReadWriteMany"]
+          resources:
+            requests:
+              storage: 10Gi
 
   service:
     enabled: true
@@ -30,7 +20,7 @@ prometheus:
 
   ingress:
     enabled: true
-    className: "nginx"
+    ingressClassName: "nginx"
     annotations:
       kubernetes.io/ingress.class: nginx
     hosts:
@@ -38,48 +28,13 @@ prometheus:
         
     tls: []
 
-  persistence:
-    enabled: true
-    storageClassName: "nfs-client"  # DESCOMENTADO e com aspas
-    accessModes:
-      - ReadWriteMany
-    size: 10Gi
+ 
 
-  kubeStateMetrics:
-    enabled: true
-    fullnameOverride: prometheus-kube-state-metrics
-
-  nodeExporter:
-    enabled: true
-    fullnameOverride: prometheus-node-exporter
-
-  resources:
-    limits:
-      cpu: 200m
-      memory: 256Mi
-    requests:
-      cpu: 100m
-      memory: 128Mi
-
-  autoscaling:
-    enabled: false
-    minReplicas: 1
-    maxReplicas: 3
-    targetCPUUtilizationPercentage: 80
-
-
-
-  securityContext:
-    runAsUser: 0
-
+ 
+# --- GRAFANA ---
 grafana:
   enabled: true
   replicaCount: 1
-
-  image:
-    repository: grafana/grafana
-    tag: "10.0.0"
-    pullPolicy: IfNotPresent
 
   persistence:
     enabled: true
@@ -97,7 +52,7 @@ grafana:
 
   ingress:
     enabled: true
-    className: "nginx"
+    ingressClassName: "nginx"
     annotations:
       kubernetes.io/ingress.class: nginx
     # Formato correto para o chart Grafana
@@ -107,7 +62,13 @@ grafana:
     # host: grafana.dyego.lab
     # path: /
 
-# Configuração global para evitar problemas adicionais
-global:
-  storageClass:
-    create: false
+# --- NODE EXPORTER ---
+prometheus-node-exporter:
+  enabled: true
+  serviceMonitor:
+    enabled: true
+
+# --- KUBE STATE METRICS ---
+kube-state-metrics:
+  enabled: true
+
