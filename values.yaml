@@ -1,32 +1,7 @@
 # --- PROMETHEUS ---
 prometheus:
   enabled: true
-  prometheusSpec:
-    replicas: 1
-    retention: 15d
-    storageSpec:
-      volumeClaimTemplate:
-        spec:
-          storageClassName: "nfs-client"
-          accessModes: ["ReadWriteMany"]
-          resources:
-            requests:
-              storage: 10Gi
-
-  service:
-    enabled: true
-    type: ClusterIP
-    port: 9090
-
-  ingress:
-    enabled: true
-    ingressClassName: "nginx"
-    annotations:
-      kubernetes.io/ingress.class: nginx
-    hosts:
-      - prometheus.dyego.lab
-        
-    tls: []
+  
 
  
 
@@ -34,6 +9,7 @@ prometheus:
 # --- GRAFANA ---
 grafana:
   enabled: true 
+
   persistence:
     enabled: true
     storageClassName: "nfs-client"  # Com aspas
@@ -58,7 +34,7 @@ grafana:
       - grafana.dyego.lab  # Lista de strings simples
     # Ou alternativamente, se não funcionar:
     # host: grafana.dyego.lab
-    # path: /
+    path: /
 
 # --- NODE EXPORTER ---
 prometheus-node-exporter:
