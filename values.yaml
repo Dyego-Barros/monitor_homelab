@@ -20,7 +20,7 @@ prometheus:
         
     tls: []
 
-server:  
+#server:  
   persistentVolume:
     enabled: true
     storageClass: "nfs-client"
