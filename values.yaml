@@ -3,9 +3,7 @@ prometheus:
   enabled: true
   
   alertmanager:
-    enabled: false   # <--- desabilita o Alertmanager 
-
-  
+    enabled: false   # <--- desabilita o Alertmanager   
     
   server:  
     persistentVolume:
@@ -14,15 +12,14 @@ prometheus:
       accessModes:
         - ReadWriteOnce
       size: 10Gi
-    
+      
     ingress:
       enabled: true
       ingressClassName: "nginx"
       annotations:
         kubernetes.io/ingress.class: nginx
       hosts:
-        - prometheus.dyego.lab
-        
+        - prometheus.dyego.lab        
       tls: []
       
     service:
