@@ -28,7 +28,7 @@ prometheus:
     service:
       enabled: true
       type: ClusterIP
-      port: 9090
+      port: 80
  
 # --- GRAFANA ---
 grafana:
