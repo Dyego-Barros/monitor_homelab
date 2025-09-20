@@ -1,17 +1,17 @@
-default:
-  enabled: false
-  storageClass:
-    create: false  # Fornece valor padrão para evitar nil pointer
-    name: ""
-  persistentVolume:
-    create: false  # Fornece valor padrão
-    enabled: false
-  persistence:
-    enabled: false
-    storageClassName: ""
-    accessModes:
-      - ReadWriteOnce
-    size: 8Gi
+#default:
+#  enabled: false
+#  storageClass:
+#    create: false  # Fornece valor padrão para evitar nil pointer
+#    name: ""
+#  persistentVolume:
+#    create: false  # Fornece valor padrão
+#    enabled: false
+#  persistence:
+#    enabled: false
+#    storageClassName: ""
+#    accessModes:
+#      - ReadWriteOnce
+#    size: 8Gi
 
 # --- PROMETHEUS ---
 prometheus:
@@ -84,6 +84,6 @@ kube-state-metrics:
   enabled: true
 
 # Configuração global para evitar problemas adicionais
-global:
-  storageClass:
-    create: false
+#global:
+#  storageClass:
+#    create: false
