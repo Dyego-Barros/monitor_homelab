@@ -5,22 +5,7 @@ prometheus:
   alertmanager:
     enabled: false   # <--- desabilita o Alertmanager 
 
-  service:
-    enabled: true
-    type: ClusterIP
-    port: 9090
-
-  ingress:
-    enabled: true
-    ingressClassName: "nginx"
-    annotations:
-      kubernetes.io/ingress.class: nginx
-    hosts:
-      - prometheus.dyego.lab
-        
-    tls: []
-
-
+  
     
   server:  
     persistentVolume:
@@ -29,6 +14,21 @@ prometheus:
       accessModes:
         - ReadWriteOnce
       size: 10Gi
+    
+    ingress:
+      enabled: true
+      ingressClassName: "nginx"
+      annotations:
+        kubernetes.io/ingress.class: nginx
+      hosts:
+        - prometheus.dyego.lab
+        
+      tls: []
+      
+    service:
+      enabled: true
+      type: ClusterIP
+      port: 9090
  
 # --- GRAFANA ---
 grafana:
