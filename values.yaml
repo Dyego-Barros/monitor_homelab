@@ -21,12 +21,12 @@ prometheus:
     enabled: false   # <--- desabilita o Alertmanager
 
   
-   persistentVolume:
-     enabled: true
-     storageClass: "nfs-client"
-     accessModes:
-       - ReadWriteMany
-     size: 10Gi
+  persistentVolume:
+    enabled: true
+    storageClass: "nfs-client"
+    accessModes:
+      - ReadWriteMany
+    size: 10Gi
 
   service:
     enabled: true
