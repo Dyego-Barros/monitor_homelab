@@ -88,6 +88,6 @@ kube-state-metrics:
   enabled: true
 
 # Configuração global para evitar problemas adicionais
-#global:
-#  storageClass:
-#    create: false
+global:
+  storageClass:
+    create: false
