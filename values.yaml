@@ -17,7 +17,7 @@
 prometheus:
   enabled: true
 
-  persistence:
+  persistentVolume::
     enabled: true
     storageClassName: "nfs-client"  # Com aspas
     accessModes:
