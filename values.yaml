@@ -27,7 +27,7 @@ prometheus:
       enabled: true
       storageClass: "nfs-client"
       accessModes:
-        - ReadWriteMany
+        - ReadWriteOnce
       size: 10Gi
  
 # --- GRAFANA ---
